@@ -1,4 +1,5 @@
 import useGrandmasters from "../hooks/useGrandmasters";
+import Grandmaster from "./Grandmaster";
 
 const GrandmastersList = () => {
   const { grandmasters, loading, error } = useGrandmasters();
@@ -51,28 +52,8 @@ const GrandmastersList = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {grandmasters.map((player, index) => (
-          <div
-            key={player}
-            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 p-4 border border-gray-200"
-          >
-            <div className="flex items-center space-x-3">
-              <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">GM</span>
-                </div>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p
-                  className="text-sm font-medium text-gray-900 truncate"
-                  title={player}
-                >
-                  {player}
-                </p>
-                <p className="text-xs text-gray-500">#{index + 1}</p>
-              </div>
-            </div>
-          </div>
+        {grandmasters.map((gm) => (
+          <Grandmaster key={gm} name={gm} />
         ))}
       </div>
     </div>
