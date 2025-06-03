@@ -13,18 +13,12 @@ import {
   Video,
 } from "lucide-react";
 import useGrandmasterDetail from "../hooks/useGrandmasterDetail";
+import useLastOnline from "../hooks/useLastOnline";
+import { formatDate } from "../libs/helpers";
 
 interface Props {
   username?: string;
 }
-
-const formatDate = (timestamp: number) => {
-  return new Date(timestamp * 1000).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
 
 const getStatusColor = (status: string) => {
   switch (status.toLowerCase()) {
@@ -39,6 +33,7 @@ const getStatusColor = (status: string) => {
 
 const GrandmasterDetail = ({ username }: Props) => {
   const { grandmaster, loading, error } = useGrandmasterDetail(username || "");
+  const lastOnlineText = useLastOnline(grandmaster?.last_online || 0);
 
   if (loading) {
     return (
@@ -211,18 +206,21 @@ const GrandmasterDetail = ({ username }: Props) => {
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">
                 Activity
               </h3>
+
               <div className="flex items-center space-x-2">
                 <Calendar className="w-4 h-4 text-gray-500" />
                 <span className="text-gray-700">
                   Joined: {formatDate(grandmaster.joined)}
                 </span>
               </div>
+
               <div className="flex items-center space-x-2">
                 <Clock className="w-4 h-4 text-gray-500" />
                 <span className="text-gray-700">
-                  Last online: {formatDate(grandmaster.last_online)}
+                  Last online: {lastOnlineText}
                 </span>
               </div>
+
               <div className="flex items-center space-x-2">
                 <BarChart3 className="w-4 h-4 text-gray-500" />
                 <span className="text-gray-700">
